@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>K562 Histone Marks and Gene Expression Project</title>
@@ -108,7 +108,8 @@
           <h3>1. Feature Matrix Preparation</h3>
           <p>
             We cleaned the merged matrix, restricted the analysis to protein-coding genes,
-            and created a second filtered set using TPM thresholds for sensitivity analysis.
+            removed rows with missing values, and excluded genes with <code>RNA_TPM = 0</code> and all histone features equal to 0.
+            We then created filtered subsets using TPM thresholds <code>&gt; 0</code>, <code>&gt; 0.1</code>, <code>&gt; 1</code>, and <code>&gt; 5</code> for sensitivity analysis.
           </p>
         </div>
         <div class="step">
@@ -428,5 +429,13 @@
       </div>
     </section>
   </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close image viewer">×</button>
+    <img class="lightbox-image" id="lightbox-image" alt="" />
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
