@@ -52,6 +52,51 @@
           </p>
         </article>
       </div>
+
+      <div class="card table-card" style="margin-top:1rem;">
+        <h3 style="margin-bottom:0.75rem;">Histone Marks Used</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Mark</th>
+              <th>Type</th>
+              <th>Biological Meaning</th>
+              <th>Where Applied</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>H3K4me3</code></td>
+              <td>Active</td>
+              <td>Tri-methylation of histone H3 lysine 4; strongly marks active promoters and transcription start sites</td>
+              <td>Promoter bins (TSS ±2 kb)</td>
+            </tr>
+            <tr>
+              <td><code>H3K27ac</code></td>
+              <td>Active</td>
+              <td>Acetylation of histone H3 lysine 27; marks active promoters and active enhancers</td>
+              <td>Promoter bins + enhancer summaries (TSS ±50 kb)</td>
+            </tr>
+            <tr>
+              <td><code>H3K27me3</code></td>
+              <td>Repressive</td>
+              <td>Tri-methylation of histone H3 lysine 27; deposited by Polycomb complexes; marks facultatively silenced genes that can be reactivated</td>
+              <td>Promoter bins (TSS ±2 kb)</td>
+            </tr>
+            <tr>
+              <td><code>H3K9me3</code></td>
+              <td>Repressive</td>
+              <td>Tri-methylation of histone H3 lysine 9; marks constitutive heterochromatin and permanently silenced regions</td>
+              <td>Promoter bins (TSS ±2 kb)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top:0.75rem;color:var(--muted);font-size:0.93rem;">
+          Note: H3K36me3, a gene-body elongation mark that is among the strongest predictors of expression
+          level in the literature, was not available in our dataset. Its absence is a likely contributor
+          to the limited regression performance observed (see Conclusion).
+        </p>
+      </div>
     </section>
 
     <section id="data" class="section">
