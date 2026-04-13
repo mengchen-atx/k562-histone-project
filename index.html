@@ -59,7 +59,9 @@
       <div class="grid three">
         <article class="card">
           <h3>Cell Line</h3>
-          <p>K562 only. All histone ChIP-seq and RNA-seq values were restricted to the same cell line.</p>
+          <p>K562 only. All histone ChIP-seq and RNA-seq values were restricted to the same cell line.
+          K562 is a chronic myelogenous leukemia (CML) cell line; its epigenome is substantially
+          altered relative to normal cells, so findings may not generalize directly to non-cancer contexts.</p>
         </article>
         <article class="card">
           <h3>Target</h3>
@@ -426,6 +428,68 @@
             <li>Future improvements should focus on stronger feature engineering, such as gene-body marks, chromatin accessibility, or richer enhancer summaries.</li>
           </ul>
         </article>
+      </div>
+
+      <div class="card callout" style="margin-top:1.25rem;">
+        <h3>Where Does the Binary Classification Signal Come From?</h3>
+        <p>
+          To probe how much of the binary classification signal was driven by distinguishing
+          completely silent genes from active ones, we re-ran all four classifiers after restricting
+          the dataset to genes with <code>TPM &gt; 0.1</code> — the same filtered set used in the
+          regression experiments.
+        </p>
+        <p style="margin-top:0.75rem;">
+          ROC AUC dropped substantially across all models, falling close to random-chance levels:
+        </p>
+
+        <div class="table-card" style="margin-top:0.75rem;">
+          <table>
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Full gene set AUC<br><small>(includes silent genes)</small></th>
+                <th>TPM &gt; 0.1 only AUC</th>
+                <th>Drop</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Random Forest</td>
+                <td>0.7065</td>
+                <td>0.5934</td>
+                <td>−0.113</td>
+              </tr>
+              <tr>
+                <td>MLP</td>
+                <td>0.6852</td>
+                <td>0.5674</td>
+                <td>−0.118</td>
+              </tr>
+              <tr>
+                <td>Logistic Regression</td>
+                <td>0.6796</td>
+                <td>0.5530</td>
+                <td>−0.127</td>
+              </tr>
+              <tr>
+                <td>HistGradientBoosting</td>
+                <td>0.6742</td>
+                <td>0.5735</td>
+                <td>−0.101</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p style="margin-top:0.9rem;">
+          This result indicates that most of the original binary classification signal reflected the
+          distinction between <em>silenced</em> genes (repressive marks such as H3K27me3 and H3K9me3
+          dominate) and <em>active</em> genes, rather than fine-grained differences in expression level
+          within the expressed population. Within expressed genes, the four-mark promoter-region feature
+          set provides only marginal predictive power — consistent with literature showing that
+          <strong>H3K36me3</strong>, a gene-body elongation mark absent from our features, accounts for
+          the majority of quantitative expression prediction power (Karlic et al., 2010, <em>PNAS</em>).
+        </p>
       </div>
     </section>
   </main>

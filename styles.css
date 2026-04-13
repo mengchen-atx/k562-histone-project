@@ -101,6 +101,7 @@ code {
 
 .section {
   padding: 2.5rem 0 0;
+  scroll-margin-top: 3.5rem;
 }
 
 .section h2 {
