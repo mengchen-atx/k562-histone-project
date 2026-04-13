@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>K562 Histone Marks and Gene Expression Project</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Final Project</p>
+      <h1>Predicting K562 Gene Expression from Histone Modification Features</h1>
+      <p class="lead">
+        This project tested whether promoter and enhancer histone signals can explain gene expression in K562 cells.
+        We first modeled continuous TPM values, found weak predictive power, then reframed the problem as binary and four-class classification.
+      </p>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <div class="wrap toc-links">
+      <a href="#question">Question</a>
+      <a href="#data">Data</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#regression">TPM Regression</a>
+      <a href="#diagnosis">Diagnosis</a>
+      <a href="#binary">Binary Classification</a>
+      <a href="#multiclass">Four-Class Classification</a>
+      <a href="#conclusion">Conclusion</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <section id="question" class="section">
+      <h2>Project Question</h2>
+      <div class="grid two">
+        <article class="card">
+          <h3>Biological Goal</h3>
+          <p>
+            We wanted to explain RNA expression levels using histone modification features in K562 cells.
+            The central idea was that active and repressive chromatin marks around each gene might carry enough information
+            to predict expression.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Modeling Goal</h3>
+          <p>
+            We first treated expression as a regression problem using <code>log2(TPM + 1)</code>.
+            Because regression performance remained poor, we also evaluated classification tasks:
+            high vs low expression, and four expression groups.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="data" class="section">
+      <h2>Data and Features</h2>
+      <div class="grid three">
+        <article class="card">
+          <h3>Cell Line</h3>
+          <p>K562 only. All histone ChIP-seq and RNA-seq values were restricted to the same cell line.</p>
+        </article>
+        <article class="card">
+          <h3>Target</h3>
+          <p><code>RNA_TPM</code>, transformed as <code>log2(TPM + 1)</code> for regression.</p>
+        </article>
+        <article class="card">
+          <h3>Feature Set</h3>
+          <p>82 total features: 80 promoter-bin features plus 2 enhancer H3K27ac summary features.</p>
+        </article>
+      </div>
+
+      <div class="card table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Feature Group</th>
+              <th>Description</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Promoter bins</td>
+              <td>TSS ±2 kb, split into 20 bins, 4 marks per bin</td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>Enhancer summaries</td>
+              <td>H3K27ac enhancer max and enhancer sum within TSS ±50 kb excluding promoter</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Total</td>
+              <td>All numerical predictors used in modeling</td>
+              <td>82</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="workflow" class="section">
+      <h2>Analysis Workflow</h2>
+      <div class="timeline">
+        <div class="step">
+          <h3>1. Feature Matrix Preparation</h3>
+          <p>
+            We cleaned the merged matrix, restricted the analysis to protein-coding genes,
+            and created a second filtered set using TPM thresholds for sensitivity analysis.
+          </p>
+        </div>
+        <div class="step">
+          <h3>2. Continuous Regression</h3>
+          <p>
+            We tested Ridge regression, Random Forest, HistGradientBoosting, and MLP on continuous TPM prediction.
+          </p>
+        </div>
+        <div class="step">
+          <h3>3. Model Diagnosis</h3>
+          <p>
+            We inspected prediction scatter plots and feature distributions between highly and weakly expressed genes
+            to check whether the signal was missing, weak, or misaligned.
+          </p>
+        </div>
+        <div class="step">
+          <h3>4. Reframing the Task</h3>
+          <p>
+            Because regression remained weak, we reframed the problem into binary classification
+            and then four-class classification.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="regression" class="section">
+      <h2>TPM Regression Results</h2>
+      <p class="section-intro">
+        Regression was run on the protein-coding, TPM &gt; 0.1 subset. The goal was to predict continuous
+        <code>log2(TPM + 1)</code>. All four models performed poorly, with near-zero or negative explanatory power.
+      </p>
+
+      <div class="card table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>R²</th>
+              <th>Pearson r</th>
+              <th>RMSE</th>
+              <th>MAE</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ridge Regression</td>
+              <td>-0.0016</td>
+              <td>0.0746</td>
+              <td>1.7722</td>
+              <td>1.3910</td>
+            </tr>
+            <tr>
+              <td>Random Forest</td>
+              <td>-0.0098</td>
+              <td>0.0867</td>
+              <td>1.7794</td>
+              <td>1.3986</td>
+            </tr>
+            <tr>
+              <td>HistGradientBoosting</td>
+              <td>-0.0241</td>
+              <td>0.0822</td>
+              <td>1.7920</td>
+              <td>1.4086</td>
+            </tr>
+            <tr>
+              <td>MLP</td>
+              <td>-0.0167</td>
+              <td>0.1066</td>
+              <td>1.7855</td>
+              <td>1.3894</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="gallery four">
+        <figure class="card">
+          <img src="assets/Linear_Regression_Results.png" alt="Linear regression results" />
+          <figcaption>Ridge regression</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/Random_Forest_Results.png" alt="Random forest regression results" />
+          <figcaption>Random forest regression</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/Gradient_Boosting_Results.png" alt="Gradient boosting regression results" />
+          <figcaption>HistGradientBoosting regression</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/MLP_Results.png" alt="MLP regression results" />
+          <figcaption>MLP regression</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="diagnosis" class="section">
+      <h2>Why Regression Performed Poorly</h2>
+      <div class="grid two">
+        <article class="card">
+          <h3>Scatter Plot Pattern</h3>
+          <p>
+            Predicted values were compressed into a narrow range rather than following the ideal diagonal line.
+            This suggested that the models were mostly learning an average expression level instead of a strong gene-specific signal.
+          </p>
+          <ul>
+            <li>Predictions clustered around a small interval.</li>
+            <li>R² stayed near zero or below zero across models.</li>
+            <li>This pointed to weak feature signal rather than a single bad model choice.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Row-Level Diagnosis</h3>
+          <p>
+            We compared top 200 and bottom 200 expressed genes. <code>H3K4me3_bin10</code> showed almost no separation,
+            while <code>H3K27ac_enhancer_sum</code> had some separation but still with large overlap.
+          </p>
+          <ul>
+            <li>Some features have signal, but it is weak.</li>
+            <li>The enhancer summary carried more signal than at least some promoter bins.</li>
+            <li>The full 82-feature set is not strong enough for accurate TPM regression.</li>
+          </ul>
+        </article>
+      </div>
+
+      <figure class="card wide-figure">
+        <img src="assets/diagnosis.png" alt="Row-level diagnosis comparing low and high expression groups" />
+        <figcaption>Distribution comparison between low-expression and high-expression genes.</figcaption>
+      </figure>
+    </section>
+
+    <section id="binary" class="section">
+      <h2>Binary Classification: High vs Low Expression</h2>
+      <p class="section-intro">
+        We then reframed the task as a binary problem. Genes in the highest 25% of expression were labeled as high,
+        genes in the lowest 25% were labeled as low, and the middle 50% were excluded.
+      </p>
+
+      <div class="card table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Accuracy</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1</th>
+              <th>ROC AUC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Logistic Regression</td>
+              <td>0.6459</td>
+              <td>0.6446</td>
+              <td>0.6339</td>
+              <td>0.6392</td>
+              <td>0.6796</td>
+            </tr>
+            <tr>
+              <td>Random Forest</td>
+              <td>0.6602</td>
+              <td>0.6580</td>
+              <td>0.6525</td>
+              <td>0.6552</td>
+              <td>0.7065</td>
+            </tr>
+            <tr>
+              <td>HistGradientBoosting</td>
+              <td>0.6315</td>
+              <td>0.6259</td>
+              <td>0.6350</td>
+              <td>0.6304</td>
+              <td>0.6806</td>
+            </tr>
+            <tr>
+              <td>MLP</td>
+              <td>0.6505</td>
+              <td>0.6617</td>
+              <td>0.6008</td>
+              <td>0.6298</td>
+              <td>0.6852</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="gallery four">
+        <figure class="card">
+          <img src="assets/binary_logistic.png" alt="Binary logistic regression results" />
+          <figcaption>Binary logistic regression</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/binary_random_forest.png" alt="Binary random forest results" />
+          <figcaption>Binary random forest</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/binary_hgb.png" alt="Binary gradient boosting results" />
+          <figcaption>Binary HistGradientBoosting</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/binary_mlp.png" alt="Binary MLP results" />
+          <figcaption>Binary MLP</figcaption>
+        </figure>
+      </div>
+
+      <div class="card callout">
+        <h3>Interpretation</h3>
+        <p>
+          Binary classification clearly performed better than continuous regression.
+          The best model, Random Forest, reached a ROC AUC of 0.7065, showing that the histone features contain enough signal
+          to separate broad expression states even when they cannot predict exact TPM values accurately.
+        </p>
+      </div>
+    </section>
+
+    <section id="multiclass" class="section">
+      <h2>Four-Class Classification: Expression Quartiles</h2>
+      <p class="section-intro">
+        Finally, we divided all genes into four equal expression groups based on ranked <code>log2(TPM + 1)</code>.
+        This tested whether the same features could distinguish finer expression categories.
+      </p>
+
+      <div class="card table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Accuracy</th>
+              <th>Macro Precision</th>
+              <th>Macro Recall</th>
+              <th>Macro F1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Logistic Regression</td>
+              <td>0.3314</td>
+              <td>0.3150</td>
+              <td>0.3315</td>
+              <td>0.3036</td>
+            </tr>
+            <tr>
+              <td>Random Forest</td>
+              <td>0.3309</td>
+              <td>0.3188</td>
+              <td>0.3309</td>
+              <td>0.3169</td>
+            </tr>
+            <tr>
+              <td>HistGradientBoosting</td>
+              <td>0.3219</td>
+              <td>0.3119</td>
+              <td>0.3219</td>
+              <td>0.3066</td>
+            </tr>
+            <tr>
+              <td>MLP</td>
+              <td>0.3206</td>
+              <td>0.3102</td>
+              <td>0.3206</td>
+              <td>0.3046</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="gallery four">
+        <figure class="card">
+          <img src="assets/multiclass_logistic.png" alt="Four-class logistic regression results" />
+          <figcaption>Four-class logistic regression</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/multiclass_random_forest.png" alt="Four-class random forest results" />
+          <figcaption>Four-class random forest</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/multiclass_hgb.png" alt="Four-class gradient boosting results" />
+          <figcaption>Four-class HistGradientBoosting</figcaption>
+        </figure>
+        <figure class="card">
+          <img src="assets/multiclass_mlp.png" alt="Four-class MLP results" />
+          <figcaption>Four-class MLP</figcaption>
+        </figure>
+      </div>
+
+      <div class="card callout">
+        <h3>Interpretation</h3>
+        <p>
+          Four-class classification was harder. Accuracy stayed around 0.32 to 0.33, only modestly above random guessing for four classes.
+          This means the current feature set can separate broad expression states better than it can distinguish fine-grained expression levels.
+        </p>
+      </div>
+    </section>
+
+    <section id="conclusion" class="section">
+      <h2>Conclusion and Reflection</h2>
+      <div class="grid two">
+        <article class="card">
+          <h3>Main Findings</h3>
+          <ul>
+            <li>Continuous TPM regression performed poorly for all tested models.</li>
+            <li>Some histone features, especially enhancer-related H3K27ac summaries, still contained usable signal.</li>
+            <li>Binary classification produced the clearest improvement, with Random Forest giving the strongest result.</li>
+            <li>Four-class classification remained difficult, suggesting the features are not rich enough for fine expression ranking.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>What We Learned</h3>
+          <ul>
+            <li>Model choice mattered less than feature quality.</li>
+            <li>Reframing the biological question changed the outcome substantially.</li>
+            <li>For this project, chromatin features were more useful for separating broad expression states than predicting exact TPM.</li>
+            <li>Future improvements should focus on stronger feature engineering, such as gene-body marks, chromatin accessibility, or richer enhancer summaries.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
