@@ -26,8 +26,7 @@
       <a href="#data">Data</a>
       <a href="#workflow">Workflow</a>
       <a href="#regression">TPM Regression</a>
-      <a href="#diagnosis">Diagnosis</a>
-      <a href="#binary">Binary Classification</a>
+<a href="#binary">Binary Classification</a>
       <a href="#multiclass">Four-Class Classification</a>
       <a href="#conclusion">Conclusion</a>
     </div>
@@ -275,40 +274,6 @@
       </div>
     </section>
 
-    <section id="diagnosis" class="section">
-      <h2>Why Regression Performed Poorly</h2>
-      <div class="grid two">
-        <article class="card">
-          <h3>Scatter Plot Pattern</h3>
-          <p>
-            Predicted values were compressed into a narrow range rather than following the ideal diagonal line.
-            This suggested that the models were mostly learning an average expression level instead of a strong gene-specific signal.
-          </p>
-          <ul>
-            <li>Predictions clustered around a small interval.</li>
-            <li>R² stayed near zero or below zero across models.</li>
-            <li>This pointed to weak feature signal rather than a single bad model choice.</li>
-          </ul>
-        </article>
-        <article class="card">
-          <h3>Row-Level Diagnosis</h3>
-          <p>
-            We compared top 200 and bottom 200 expressed genes. <code>H3K4me3_bin10</code> showed almost no separation,
-            while <code>H3K27ac_enhancer_sum</code> had some separation but still with large overlap.
-          </p>
-          <ul>
-            <li>Some features have signal, but it is weak.</li>
-            <li>The enhancer summary carried more signal than at least some promoter bins.</li>
-            <li>Even the expanded 122-feature set is not sufficient for accurate fine-grained TPM regression.</li>
-          </ul>
-        </article>
-      </div>
-
-      <figure class="card wide-figure">
-        <img src="assets/diagnosis.png" alt="Row-level diagnosis comparing low and high expression groups" />
-        <figcaption>Distribution comparison between low-expression and high-expression genes.</figcaption>
-      </figure>
-    </section>
 
     <section id="binary" class="section">
       <h2>Binary Classification: High vs Low Expression</h2>
