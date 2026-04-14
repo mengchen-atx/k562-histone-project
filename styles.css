@@ -271,6 +271,20 @@ ul {
   padding-left: 1.1rem;
 }
 
+/* ── Footer ───────────────────────────────────────────────────────────── */
+.site-footer {
+  margin-top: 5rem;
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--line);
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
 /* ── Workflow section: left text, right image ─────────────────────────── */
 .workflow-layout {
   display: flex;
