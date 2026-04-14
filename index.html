@@ -423,16 +423,6 @@
             </tr>
           </tbody>
         </table>
-        <dl class="metric-notes">
-          <dt>Accuracy</dt>
-          <dd>Fraction of test genes assigned to the correct quartile class (Q1–Q4) out of all predictions. Random-chance baseline for four equal classes is 0.25.</dd>
-          <dt>Macro Precision</dt>
-          <dd>Precision computed independently for each of the four classes, then averaged with equal weight: Macro Precision = (1/4) Σ TP<sub>k</sub> / (TP<sub>k</sub> + FP<sub>k</sub>). "Macro" means each class contributes equally regardless of size, so performance on the rare classes is not diluted.</dd>
-          <dt>Macro Recall</dt>
-          <dd>Recall computed per class and averaged: Macro Recall = (1/4) Σ TP<sub>k</sub> / (TP<sub>k</sub> + FN<sub>k</sub>). Captures whether the model finds each expression quartile, not just the most frequent one.</dd>
-          <dt>Macro F1</dt>
-          <dd>Harmonic mean of Macro Precision and Macro Recall, averaged across the four classes. Summarises overall balance between precision and recall for the multi-class problem. Range: 0 to 1; higher is better.</dd>
-        </dl>
       </div>
 
       <div class="gallery four">
