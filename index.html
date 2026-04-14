@@ -153,11 +153,13 @@
       <div class="timeline">
         <div class="step">
           <h3>1. Feature Matrix Preparation</h3>
-          <p>
-            We cleaned the merged matrix, restricted the analysis to protein-coding genes,
-            removed rows with missing values, and excluded genes with <code>RNA_TPM = 0</code> and all histone features equal to 0.
-            We then created filtered subsets using TPM thresholds <code>&gt; 0</code>, <code>&gt; 0.1</code>, <code>&gt; 1</code>, and <code>&gt; 5</code> for sensitivity analysis.
-          </p>
+          <p>We applied the following filters to the merged feature matrix in order:</p>
+          <ul>
+            <li><strong>Protein-coding genes only</strong> — non-coding RNA genes, pseudogenes, and other biotypes were excluded using NCBI gene annotation.</li>
+            <li><strong>Remove missing values</strong> — rows with any <code>NaN</code> in feature or target columns were dropped.</li>
+            <li><strong>Exclude double-zero rows</strong> — genes with both <code>RNA_TPM = 0</code> and all histone features equal to 0 were removed, as they carry no signal.</li>
+            <li><strong>TPM threshold subsets</strong> — additional filtered versions at <code>TPM &gt; 0</code>, <code>&gt; 0.1</code>, <code>&gt; 1</code>, and <code>&gt; 5</code> were created for sensitivity analysis.</li>
+          </ul>
         </div>
         <div class="step">
           <h3>2. Continuous Regression</h3>
