@@ -271,6 +271,43 @@ ul {
   padding-left: 1.1rem;
 }
 
+/* ── Metric annotation notes below tables ─────────────────────────────── */
+.metric-notes {
+  margin: 1.1rem 0 0;
+  padding: 0.9rem 1rem;
+  background: var(--accent-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  display: grid;
+  gap: 0.55rem 0;
+}
+
+.metric-notes dt {
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0.55rem 0 0.1rem;
+}
+
+.metric-notes dt:first-child {
+  margin-top: 0;
+}
+
+.metric-notes dd {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.metric-notes code {
+  font-size: 0.8rem;
+  background: rgba(47, 93, 138, 0.1);
+  padding: 0.05em 0.3em;
+  border-radius: 3px;
+}
+
 @media (max-width: 900px) {
   .grid.two,
   .grid.three,

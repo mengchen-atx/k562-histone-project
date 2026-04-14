@@ -244,6 +244,16 @@
             </tr>
           </tbody>
         </table>
+        <dl class="metric-notes">
+          <dt>R² (Coefficient of Determination)</dt>
+          <dd>Proportion of variance in <code>log2(TPM + 1)</code> explained by the model. R² = 1 − SS<sub>res</sub> / SS<sub>tot</sub>, where SS<sub>res</sub> is the sum of squared residuals and SS<sub>tot</sub> is the total variance around the mean. Range: −∞ to 1; higher is better. R² ≤ 0 means the model is no better than predicting the mean.</dd>
+          <dt>Pearson r (Pearson Correlation Coefficient)</dt>
+          <dd>Linear correlation between actual and predicted <code>log2(TPM + 1)</code> values across the test set. r = cov(ŷ, y) / (σ<sub>ŷ</sub> · σ<sub>y</sub>). Range: −1 to 1; higher magnitude is better. Unlike R², it is not sensitive to systematic bias in scale.</dd>
+          <dt>RMSE (Root Mean Squared Error)</dt>
+          <dd>Square root of the average squared difference between predicted and actual values: RMSE = √(Σ(ŷ<sub>i</sub> − y<sub>i</sub>)² / n). Units match the target (<code>log2(TPM + 1)</code>); lower is better. Penalises large errors more heavily than MAE.</dd>
+          <dt>MAE (Mean Absolute Error)</dt>
+          <dd>Average absolute difference between predicted and actual values: MAE = Σ|ŷ<sub>i</sub> − y<sub>i</sub>| / n. Units match the target; lower is better. More robust to outliers than RMSE.</dd>
+        </dl>
       </div>
 
       <div class="gallery four">
@@ -355,6 +365,18 @@
             </tr>
           </tbody>
         </table>
+        <dl class="metric-notes">
+          <dt>Accuracy</dt>
+          <dd>Fraction of test genes correctly classified: (TP + TN) / (TP + TN + FP + FN). Intuitive but can be misleading when classes are imbalanced. Here classes are balanced by construction (equal-sized quartile groups).</dd>
+          <dt>Precision</dt>
+          <dd>Of all genes predicted as "high expression", what fraction actually are: Precision = TP / (TP + FP). High precision means few false positives — the model is conservative about calling a gene highly expressed.</dd>
+          <dt>Recall (Sensitivity)</dt>
+          <dd>Of all truly high-expression genes, what fraction did the model correctly identify: Recall = TP / (TP + FN). High recall means few missed high-expression genes. Precision and Recall trade off against each other.</dd>
+          <dt>F1 Score</dt>
+          <dd>Harmonic mean of Precision and Recall: F1 = 2 · (Precision · Recall) / (Precision + Recall). Balances both concerns in a single number. Range: 0 to 1; higher is better.</dd>
+          <dt>ROC AUC (Area Under the Receiver Operating Characteristic Curve)</dt>
+          <dd>Probability that the model ranks a randomly chosen high-expression gene above a randomly chosen low-expression gene. The ROC curve plots True Positive Rate vs False Positive Rate at all classification thresholds; AUC summarises the full curve. Range: 0.5 (random) to 1.0 (perfect); higher is better. Unlike Accuracy, AUC is threshold-independent.</dd>
+        </dl>
       </div>
 
       <div class="gallery four">
@@ -436,6 +458,16 @@
             </tr>
           </tbody>
         </table>
+        <dl class="metric-notes">
+          <dt>Accuracy</dt>
+          <dd>Fraction of test genes assigned to the correct quartile class (Q1–Q4) out of all predictions. Random-chance baseline for four equal classes is 0.25.</dd>
+          <dt>Macro Precision</dt>
+          <dd>Precision computed independently for each of the four classes, then averaged with equal weight: Macro Precision = (1/4) Σ TP<sub>k</sub> / (TP<sub>k</sub> + FP<sub>k</sub>). "Macro" means each class contributes equally regardless of size, so performance on the rare classes is not diluted.</dd>
+          <dt>Macro Recall</dt>
+          <dd>Recall computed per class and averaged: Macro Recall = (1/4) Σ TP<sub>k</sub> / (TP<sub>k</sub> + FN<sub>k</sub>). Captures whether the model finds each expression quartile, not just the most frequent one.</dd>
+          <dt>Macro F1</dt>
+          <dd>Harmonic mean of Macro Precision and Macro Recall, averaged across the four classes. Summarises overall balance between precision and recall for the multi-class problem. Range: 0 to 1; higher is better.</dd>
+        </dl>
       </div>
 
       <div class="gallery four">
