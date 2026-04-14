@@ -273,13 +273,19 @@ ul {
 
 /* ── Workflow section: left text, right image ─────────────────────────── */
 .workflow-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
   gap: 2rem;
-  align-items: start;
+  align-items: flex-start;
+}
+
+.workflow-layout .timeline {
+  flex: 1 1 0;
+  min-width: 0;
 }
 
 .workflow-figure {
+  flex: 0 0 44%;
   position: sticky;
   top: 5rem;
 }
@@ -287,16 +293,19 @@ ul {
 .workflow-figure img {
   width: 100%;
   height: auto;
+  display: block;
   border-radius: 8px;
   box-shadow: var(--shadow);
 }
 
 @media (max-width: 900px) {
   .workflow-layout {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
 
   .workflow-figure {
+    flex: none;
+    width: 100%;
     position: static;
   }
 }
