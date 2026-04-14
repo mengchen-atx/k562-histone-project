@@ -271,6 +271,36 @@ ul {
   padding-left: 1.1rem;
 }
 
+/* ── Workflow section: left text, right image ─────────────────────────── */
+.workflow-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.workflow-figure {
+  position: sticky;
+  top: 5rem;
+}
+
+.workflow-figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+@media (max-width: 900px) {
+  .workflow-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-figure {
+    position: static;
+  }
+}
+
 /* ── Metric annotation notes below tables ─────────────────────────────── */
 .metric-notes {
   margin: 1.1rem 0 0;

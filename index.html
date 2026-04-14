@@ -152,36 +152,41 @@
 
     <section id="workflow" class="section">
       <h2>Analysis Workflow</h2>
-      <div class="timeline">
-        <div class="step">
-          <h3>1. Feature Matrix Preparation</h3>
-          <p>We applied the following filters to the merged feature matrix in order:</p>
-          <ul>
-            <li><strong>Protein-coding genes only</strong> — non-coding RNA genes, pseudogenes, and other biotypes were excluded using NCBI gene annotation.</li>
-            <li><strong>Remove missing values</strong> — rows with any <code>NaN</code> in feature or target columns were dropped.</li>
-            <li><strong>Exclude double-zero rows</strong> — genes with both <code>RNA_TPM = 0</code> and all histone features equal to 0 were removed, as they carry no signal.</li>
-            <li><strong>TPM threshold subsets</strong> — additional filtered versions at <code>TPM &gt; 0</code>, <code>&gt; 0.1</code>, <code>&gt; 1</code>, and <code>&gt; 5</code> were created for sensitivity analysis.</li>
-          </ul>
+      <div class="workflow-layout">
+        <div class="timeline">
+          <div class="step">
+            <h3>1. Feature Matrix Preparation</h3>
+            <p>We applied the following filters to the merged feature matrix in order:</p>
+            <ul>
+              <li><strong>Protein-coding genes only</strong> — non-coding RNA genes, pseudogenes, and other biotypes were excluded using NCBI gene annotation.</li>
+              <li><strong>Remove missing values</strong> — rows with any <code>NaN</code> in feature or target columns were dropped.</li>
+              <li><strong>Exclude double-zero rows</strong> — genes with both <code>RNA_TPM = 0</code> and all histone features equal to 0 were removed, as they carry no signal.</li>
+              <li><strong>TPM threshold subsets</strong> — additional filtered versions at <code>TPM &gt; 0</code>, <code>&gt; 0.1</code>, <code>&gt; 1</code>, and <code>&gt; 5</code> were created for sensitivity analysis.</li>
+            </ul>
+          </div>
+          <div class="step">
+            <h3>2. Continuous Regression</h3>
+            <p>
+              We tested Ridge regression, Random Forest, HistGradientBoosting, and MLP on continuous TPM prediction.
+            </p>
+          </div>
+          <div class="step">
+            <h3>3. Model Diagnosis</h3>
+            <p>
+              We inspected prediction scatter plots and feature distributions between highly and weakly expressed genes
+              to check whether the signal was missing, weak, or misaligned.
+            </p>
+          </div>
+          <div class="step">
+            <h3>4. Reframing the Task</h3>
+            <p>
+              Because regression remained weak, we reframed the problem into binary classification
+              and then four-class classification.
+            </p>
+          </div>
         </div>
-        <div class="step">
-          <h3>2. Continuous Regression</h3>
-          <p>
-            We tested Ridge regression, Random Forest, HistGradientBoosting, and MLP on continuous TPM prediction.
-          </p>
-        </div>
-        <div class="step">
-          <h3>3. Model Diagnosis</h3>
-          <p>
-            We inspected prediction scatter plots and feature distributions between highly and weakly expressed genes
-            to check whether the signal was missing, weak, or misaligned.
-          </p>
-        </div>
-        <div class="step">
-          <h3>4. Reframing the Task</h3>
-          <p>
-            Because regression remained weak, we reframed the problem into binary classification
-            and then four-class classification.
-          </p>
+        <div class="workflow-figure">
+          <img src="assets/workflow.png" alt="Analysis workflow diagram" />
         </div>
       </div>
     </section>
