@@ -243,14 +243,14 @@
           </tbody>
         </table>
         <dl class="metric-notes">
-          <dt>R² (Coefficient of Determination)</dt>
-          <dd>Proportion of variance in <code>log2(TPM + 1)</code> explained by the model. R² = 1 − SS<sub>res</sub> / SS<sub>tot</sub>, where SS<sub>res</sub> is the sum of squared residuals and SS<sub>tot</sub> is the total variance around the mean. Range: −∞ to 1; higher is better. R² ≤ 0 means the model is no better than predicting the mean.</dd>
-          <dt>Pearson r (Pearson Correlation Coefficient)</dt>
-          <dd>Linear correlation between actual and predicted <code>log2(TPM + 1)</code> values across the test set. r = cov(ŷ, y) / (σ<sub>ŷ</sub> · σ<sub>y</sub>). Range: −1 to 1; higher magnitude is better. Unlike R², it is not sensitive to systematic bias in scale.</dd>
-          <dt>RMSE (Root Mean Squared Error)</dt>
-          <dd>Square root of the average squared difference between predicted and actual values: RMSE = √(Σ(ŷ<sub>i</sub> − y<sub>i</sub>)² / n). Units match the target (<code>log2(TPM + 1)</code>); lower is better. Penalises large errors more heavily than MAE.</dd>
-          <dt>MAE (Mean Absolute Error)</dt>
-          <dd>Average absolute difference between predicted and actual values: MAE = Σ|ŷ<sub>i</sub> − y<sub>i</sub>| / n. Units match the target; lower is better. More robust to outliers than RMSE.</dd>
+          <dt>R²</dt>
+          <dd>Variance in <code>log2(TPM+1)</code> explained by the model. Range −∞ to 1; <strong>ideal = 1</strong>. Values ≤ 0 indicate the model is no better than predicting the mean.</dd>
+          <dt>Pearson r</dt>
+          <dd>Linear correlation between predicted and actual values. Range −1 to 1; <strong>ideal = 1</strong>.</dd>
+          <dt>RMSE</dt>
+          <dd>√(mean squared error), in <code>log2(TPM+1)</code> units. Penalises large errors heavily. <strong>Ideal = 0</strong>.</dd>
+          <dt>MAE</dt>
+          <dd>Mean absolute error, in <code>log2(TPM+1)</code> units. More robust to outliers than RMSE. <strong>Ideal = 0</strong>.</dd>
         </dl>
       </div>
 
