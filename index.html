@@ -15,7 +15,7 @@
         This project tested whether promoter and enhancer histone signals can explain gene expression in K562 cells,
         using six histone marks: H3K4me3, H3K27ac, H3K27me3, H3K9me3, H3K36me3, and H3K4me1.
         We modeled continuous TPM values, found limited regression performance, then reframed the problem
-        as binary and four-class classification — achieving a ROC AUC above 0.85 in the binary task.
+        as binary and four-class classification.
       </p>
     </div>
   </header>
@@ -38,20 +38,13 @@
       <h2>Project Question</h2>
       <div class="grid two">
         <article class="card">
-          <h3>Biological Goal</h3>
+          <h3>Research Gap</h3>
           <p>
-            We wanted to explain RNA expression levels using histone modification features in K562 cells.
-            The central idea was that active and repressive chromatin marks around each gene might carry enough information
-            to predict expression.
+            The epigenetic regulation of gene expression is a widely studied topic, with researchers often gathering new insight into how chromatin remodeling, DNA methylation/demethylation, and histone modification factors control gene activity. These epigenetic changes not only affect DNA accessibility but also contribute to tissue development, disease progression, and cellular reprogramming after injury (Bernstein et al., 2007). The intersection of biology, statistics, and machine learning has led to advancements in our understanding of this complex cellular phenomenon and its representation in the mammalian genome. However, only a few machine learning models accurately depict how these epigenetic mechanisms, especially histone modifications, determine gene expression–creating a knowledge gap that this project aims to address.
           </p>
         </article>
-        <article class="card">
-          <h3>Modeling Goal</h3>
-          <p>
-            We first treated expression as a regression problem using <code>log2(TPM + 1)</code>.
-            Because regression performance remained poor, we also evaluated classification tasks:
-            high vs low expression, and four expression groups.
-          </p>
+        <article class="card" style="padding:0.5rem;display:flex;align-items:center;justify-content:center;">
+          <img src="assets/intro.png" alt="Project overview diagram" style="width:100%;height:auto;display:block;border-radius:4px;" />
         </article>
       </div>
 
