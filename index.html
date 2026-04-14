@@ -331,15 +331,15 @@
         </table>
         <dl class="metric-notes">
           <dt>Accuracy</dt>
-          <dd>Fraction of test genes correctly classified: (TP + TN) / (TP + TN + FP + FN). Intuitive but can be misleading when classes are imbalanced. Here classes are balanced by construction (equal-sized quartile groups).</dd>
+          <dd>Fraction of genes correctly classified: (TP + TN) / total. <strong>Ideal = 1</strong>.</dd>
           <dt>Precision</dt>
-          <dd>Of all genes predicted as "high expression", what fraction actually are: Precision = TP / (TP + FP). High precision means few false positives — the model is conservative about calling a gene highly expressed.</dd>
-          <dt>Recall (Sensitivity)</dt>
-          <dd>Of all truly high-expression genes, what fraction did the model correctly identify: Recall = TP / (TP + FN). High recall means few missed high-expression genes. Precision and Recall trade off against each other.</dd>
-          <dt>F1 Score</dt>
-          <dd>Harmonic mean of Precision and Recall: F1 = 2 · (Precision · Recall) / (Precision + Recall). Balances both concerns in a single number. Range: 0 to 1; higher is better.</dd>
-          <dt>ROC AUC (Area Under the Receiver Operating Characteristic Curve)</dt>
-          <dd>Probability that the model ranks a randomly chosen high-expression gene above a randomly chosen low-expression gene. The ROC curve plots True Positive Rate vs False Positive Rate at all classification thresholds; AUC summarises the full curve. Range: 0.5 (random) to 1.0 (perfect); higher is better. Unlike Accuracy, AUC is threshold-independent.</dd>
+          <dd>Of genes predicted high-expression, fraction that truly are: TP / (TP + FP). <strong>Ideal = 1</strong>.</dd>
+          <dt>Recall</dt>
+          <dd>Of all truly high-expression genes, fraction correctly identified: TP / (TP + FN). <strong>Ideal = 1</strong>.</dd>
+          <dt>F1</dt>
+          <dd>Harmonic mean of Precision and Recall. Balances both in one number. <strong>Ideal = 1</strong>.</dd>
+          <dt>ROC AUC</dt>
+          <dd>Probability the model ranks a high-expression gene above a low-expression gene. Threshold-independent. Range 0.5 (random) to 1; <strong>ideal = 1</strong>.</dd>
         </dl>
       </div>
 
