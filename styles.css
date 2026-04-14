@@ -60,6 +60,13 @@ code {
   border-bottom: 1px solid var(--line);
 }
 
+.authors {
+  margin: 0.25rem 0 1rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
 .eyebrow {
   margin: 0 0 0.75rem;
   color: var(--accent);
