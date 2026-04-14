@@ -487,64 +487,6 @@
         </article>
       </div>
 
-      <div class="card callout" style="margin-top:1.25rem;">
-        <h3>Impact of Adding H3K36me3 and H3K4me1</h3>
-        <p>
-          The V3 dataset expanded the feature set from four marks to six by adding H3K36me3 (a
-          gene-body elongation mark) and H3K4me1 (an enhancer-associated mark). Across all tasks,
-          performance improved noticeably:
-        </p>
-
-        <div class="table-card" style="margin-top:0.75rem;">
-          <table>
-            <thead>
-              <tr>
-                <th>Task / Metric</th>
-                <th>4-mark (V2)</th>
-                <th>6-mark (V3)</th>
-                <th>Change</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Regression best R²</td>
-                <td>−0.0098</td>
-                <td>0.1005</td>
-                <td>+0.11</td>
-              </tr>
-              <tr>
-                <td>Regression best Pearson r</td>
-                <td>0.1066</td>
-                <td>0.3196</td>
-                <td>+0.21</td>
-              </tr>
-              <tr>
-                <td>Binary classification best ROC AUC</td>
-                <td>0.7065</td>
-                <td>0.8515</td>
-                <td>+0.145</td>
-              </tr>
-              <tr>
-                <td>Four-class best accuracy</td>
-                <td>0.3309</td>
-                <td>0.4063</td>
-                <td>+0.075</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p style="margin-top:0.9rem;">
-          H3K36me3, which is deposited co-transcriptionally across actively transcribed gene bodies,
-          is among the strongest single-mark predictors of expression level in the literature
-          (Karlic et al., 2010, <em>PNAS</em>). Its inclusion here accounts for a large share of
-          the observed gain. H3K4me1 contributes additional signal by capturing enhancer activity
-          near promoters. Despite these improvements, fine-grained TPM regression and four-class
-          ranking remain difficult, suggesting that the promoter-bin representation still misses
-          regulatory information captured by gene-body coverage, chromatin accessibility, or
-          richer long-range enhancer interactions.
-        </p>
-      </div>
     </section>
   </main>
 
